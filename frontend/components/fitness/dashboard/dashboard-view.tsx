@@ -1,7 +1,7 @@
 'use client'
 
 import { Check, Plus, X } from 'lucide-react'
-import { useId, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { currentWeight, fmt1, fmtInt, formatLongDate } from '@/lib/fitness/calc'
 import { PRESET_LABELS } from '@/lib/fitness/mock-data'
 import { useFitness } from '@/lib/fitness/store'
@@ -24,7 +24,18 @@ export function DashboardView({ onNavigate }: { onNavigate: (t: Tab) => void }) 
   const [logging, setLogging] = useState(false)
   const [value, setValue] = useState(() => fmt1(currentWeight(state.weights)))
   const [saved, setSaved] = useState(false)
+  const [username, setUsername] = useState('')
   const inputId = useId()
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('fitness_user')
+      if (raw) {
+        const parsed = JSON.parse(raw)
+        if (parsed?.username) setUsername(parsed.username)
+      }
+    } catch {}
+  }, [])
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -41,7 +52,10 @@ export function DashboardView({ onNavigate }: { onNavigate: (t: Tab) => void }) 
       <header className="flex flex-col gap-4 pb-1 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="num text-xs text-muted-foreground">{formatLongDate(now)}</p>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight md:text-3xl">{greeting(now.getHours())}, Andrei</h1>
+          <h1 className="mt-1 text-2xl font-semibold tracking-tight md:text-3xl">
+            {greeting(now.getHours())}
+            {username ? `, ${username}` : ''}
+          </h1>
           <p className="mt-2 inline-flex items-center gap-2 rounded-sm border border-border px-2 py-1 text-[11px] text-muted-foreground">
             <span className="size-1.5 rounded-full bg-primary" aria-hidden />
             Split activ: <span className="text-foreground">{PRESET_LABELS[state.plan.preset]}</span>
