@@ -1,0 +1,108 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface-2: var(--surface-2);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+:root {
+  color-scheme: dark;
+  --radius: 0.5rem;
+  --background: #111110;
+  --foreground: #f4f3ef;
+  --card: #191918;
+  --card-foreground: #f4f3ef;
+  --popover: #191918;
+  --popover-foreground: #f4f3ef;
+  --surface-2: #20201e;
+  --primary: #e84c22;
+  --primary-foreground: #111110;
+  --secondary: #222220;
+  --secondary-foreground: #f4f3ef;
+  --muted: #222220;
+  --muted-foreground: #8e8d8a;
+  --accent: #222220;
+  --accent-foreground: #f4f3ef;
+  --destructive: #e5484d;
+  --success: #34a853;
+  --border: #282826;
+  --input: #2e2e2b;
+  --ring: #e84c22;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+@utility num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+@utility range-track {
+  appearance: none;
+  height: 2px;
+  background: var(--border);
+  border-radius: 999px;
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    background: var(--foreground);
+    border: 4px solid var(--primary);
+    cursor: pointer;
+  }
+  &::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    background: var(--foreground);
+    border: 4px solid var(--primary);
+    cursor: pointer;
+  }
+}
